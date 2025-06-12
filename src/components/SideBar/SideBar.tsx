@@ -1,3 +1,4 @@
+import { useWindowDimensions } from "@app/hooks";
 import { Button } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useEffect, useState } from "react";
@@ -62,6 +63,8 @@ export const SideBar = ({
     openWidth = 400,
     closedWidth = 50,
 }: SideBarProps) => {
+    const { width } = useWindowDimensions();
+
     // Determine default state based on device and prop
     const getDefaultOpenState = () => {
         if (isClosedByDefault !== undefined) {
@@ -85,9 +88,9 @@ export const SideBar = ({
 
     const sidebarVariants = {
         open: {
-            width: isMobile ? "100vw" : openWidth,
-            minWidth: isMobile ? "100vw" : closedWidth,
-            maxWidth: isMobile ? "100vw" : openWidth,
+            width: isMobile ? width * 100 : openWidth,
+            minWidth: isMobile ? width * 100 : closedWidth,
+            maxWidth: isMobile ? width * 100 : openWidth,
             x: 0,
             transition: {
                 type: "spring",
