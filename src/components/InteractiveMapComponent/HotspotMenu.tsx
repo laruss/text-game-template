@@ -1,9 +1,9 @@
+import { evalIfFunction } from "@app/utils";
 import { ImagePositionInfo } from "@components/InteractiveMapComponent/types";
 import { MapMenu } from "@engine/passages/interactiveMap";
+import { Button, Tooltip } from "@heroui/react";
 import { useEffect, useMemo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { evalIfFunction } from "@app/utils";
-import { Button, Tooltip } from "@heroui/react";
 
 type Props = {
     menu: MapMenu;

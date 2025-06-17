@@ -1,7 +1,7 @@
+import { useDisclosure } from "@heroui/react";
 import { ReactNode, useState } from "react";
 
 import { ConfirmationDialogContext, ConfirmationDialogContextType } from "./Context";
-import { useDisclosure } from "@heroui/react";
 
 interface ConfirmationDialogProviderProps {
     children: ReactNode;

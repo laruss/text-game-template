@@ -1,4 +1,5 @@
 import { callIfFunction } from "@engine/helpers";
+import { OptionalCallable } from "@engine/types";
 
 import { InteractiveMap } from "./interactiveMap";
 import {
@@ -8,7 +9,6 @@ import {
     SideImageHotspot,
     SideLabelHotspot,
 } from "./types";
-import { OptionalCallable } from "@engine/types";
 
 export const newInteractiveMap = (
     id: string,
