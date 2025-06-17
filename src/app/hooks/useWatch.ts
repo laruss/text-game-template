@@ -11,5 +11,17 @@ import { useProxy } from "valtio/utils";
 export function useWatch<T extends BaseGameObject>(gameObject: T): T {
     const proxiedObject = Game.getProxiedObject(gameObject);
 
-    return useProxy(proxiedObject);
+    try {
+        return useProxy(proxiedObject);
+    } catch (error) {
+        // if error is a TypeError, it means the object is not registered
+        if (error instanceof TypeError) {
+            console.error(
+                `Object "${gameObject.id}" is not registered in the game. Did you forget to call Game.registerEntity?`
+            );
+            throw error;
+        } else {
+            throw error; // rethrow other types of errors
+        }
+    }
 }
