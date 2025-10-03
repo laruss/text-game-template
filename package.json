@@ -1,8 +1,36 @@
 {
-    "name": "text-game",
+    "name": "react-text-game",
+    "version": "0.2.0",
+    "description": "A modern, TypeScript-based framework for creating interactive text-based adventure games with a rich web interface. Build immersive narratives through a passage-based system that supports story content, interactive maps, and custom React widgets.",
     "private": true,
-    "version": "0.0.2",
     "type": "module",
+    "author": "laruss",
+    "license": "MIT",
+    "keywords": [
+        "text-adventure",
+        "game-engine",
+        "interactive-fiction",
+        "typescript",
+        "react",
+        "valtio",
+        "vite",
+        "bun",
+        "story-game",
+        "interactive-map",
+        "narrative-game",
+        "visual-novel"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/laruss/text-game-template.git"
+    },
+    "homepage": "https://github.com/laruss/text-game-template#readme",
+    "bugs": {
+        "url": "https://github.com/laruss/text-game-template/issues"
+    },
+    "engines": {
+        "bun": ">=1.2.10"
+    },
     "scripts": {
         "dev": "bunx --bun vite",
         "build": "tsc -b && vite build",

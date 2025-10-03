@@ -1,5 +1,7 @@
 # Text Adventure Game Engine
 
+### Version 0.2.0
+
 A modern, TypeScript-based framework for creating interactive text-based adventure games with a rich web interface. Build immersive narratives through a passage-based system that supports story content, interactive maps with clickable hotspots, and custom React widgets.
 
 ## Overview
