@@ -17,8 +17,13 @@ const queryClient = new QueryClient();
 
 export const GameProvider = ({ children }: PropsWithChildren) => {
     useEffect(() => {
-        Game.loadFromSessionStorage();
-        Game.enableAutoSave();
+        // Initialize game (create/update system save with initial state)
+        Game.init().then(() => {
+            // Load from session storage if available
+            Game.loadFromSessionStorage();
+            // Enable auto-save
+            Game.enableAutoSave();
+        });
     }, []);
 
     return (

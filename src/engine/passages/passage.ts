@@ -11,9 +11,8 @@ export class Passage {
         Game.registerPassage(this);
     }
 
-    // this method should be overridden by subclasses
-    display<T extends InitVarsType = EmptyObject>(props: T = {} as T) {
-        console.log(`Displaying passage: ${this.id} with props:`, props);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    display<T extends InitVarsType = EmptyObject>(_props: T = {} as T) {
         throw new Error(
             `Display method not implemented for passage: ${this.id}`
         );

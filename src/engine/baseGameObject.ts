@@ -32,18 +32,9 @@ export class BaseGameObject<VariablesType extends InitVarsType = InitVarsType> {
                 delete this._variables[key];
             }
         }
-        console.log(
-            `Object ${this.id} loaded variables:`,
-            snapshot(this._variables)
-        );
     }
 
-    // save variables to the game state
     save() {
         Storage.setValue(this.path, snapshot(this._variables));
-        console.log(
-            `Object ${this.id} saved variables:`,
-            snapshot(this._variables)
-        );
     }
 }

@@ -43,7 +43,6 @@ export class Game {
             }
 
             const proxiedObject = proxy(object);
-            console.log(`Registering and proxying object: ${object.id}`);
             objectRegistry.set(object.id, proxiedObject);
         });
     }
@@ -71,7 +70,6 @@ export class Game {
                 );
             }
 
-            console.log(`Registering passage: ${passage.id}`);
             passagesRegistry.set(passage.id, passage);
         });
     }
@@ -127,7 +125,6 @@ export class Game {
         Game.state.currentPassageId = retrievedPassage
             ? retrievedPassage.id
             : null;
-        console.log(`Jumping to passage: ${Game.state.currentPassageId}`);
     }
 
     /**
@@ -171,7 +168,7 @@ export class Game {
      *
      * @return {void} No return value.
      */
-    private static save() {
+    private static save(): void {
         const internalState = {
             currentPassageId: Game.state.currentPassageId,
         } as const satisfies GameInternalSaveState;
@@ -221,7 +218,6 @@ export class Game {
         Game.saveTimer = setTimeout(() => {
             const state = Game.getState();
             sessionStorage.setItem(Game.AUTO_SAVE_KEY, JSON.stringify(state));
-            console.log("Game state auto-saved to session storage");
         }, Game.SAVE_DEBOUNCE_MS);
     }
 
@@ -250,8 +246,6 @@ export class Game {
             });
             Game.unsubscribeFunctions.push(unsubEntity);
         }
-
-        console.log("Auto-save enabled");
     }
 
     /**
@@ -274,7 +268,6 @@ export class Game {
         Game.unsubscribeFunctions = [];
 
         Game.autoSaveEnabled = false;
-        console.log("Auto-save disabled");
     }
 
     /**
@@ -286,14 +279,12 @@ export class Game {
         const savedState = sessionStorage.getItem(Game.AUTO_SAVE_KEY);
 
         if (!savedState) {
-            console.log("No auto-saved state found in session storage");
             return false;
         }
 
         try {
             const state = JSON.parse(savedState) as GameSaveState;
             Game.setState(state);
-            console.log("Game state loaded from session storage");
             return true;
         } catch (error) {
             console.error("Failed to load state from session storage:", error);
@@ -306,6 +297,19 @@ export class Game {
      */
     static clearAutoSave(): void {
         sessionStorage.removeItem(Game.AUTO_SAVE_KEY);
-        console.log("Auto-saved state cleared from session storage");
+    }
+
+    /**
+     * Initializes the game by creating/updating the system save with the current initial state.
+     * This should be called once when the game loads to capture the initial state of all entities.
+     *
+     * @returns {Promise<void>}
+     */
+    static async init(): Promise<void> {
+        // We need to import dynamically to avoid circular dependencies
+        const { createOrUpdateSystemSave } = await import("@app/db");
+
+        const initialState = Game.getState();
+        await createOrUpdateSystemSave(initialState);
     }
 }
