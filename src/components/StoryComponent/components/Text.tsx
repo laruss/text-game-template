@@ -1,13 +1,17 @@
 import { TextComponent } from "@engine/passages/story";
 import { twMerge } from "tailwind-merge";
 
-export const Text = ({ component }: { component: TextComponent }) => (
+type TextProps = Readonly<{
+    component: TextComponent;
+}>;
+
+export const Text = ({ component: { props, content } }: TextProps) => (
     <div
         className={twMerge(
             "text-base text-justify whitespace-pre-wrap",
-            component.props?.className
+            props?.className
         )}
     >
-        {component.content}
+        {content}
     </div>
 );

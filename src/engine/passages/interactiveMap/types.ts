@@ -1,4 +1,9 @@
-import { ButtonColor, ButtonVariant, OptionalCallable } from "@engine/types";
+import {
+    ButtonColor,
+    ButtonVariant,
+    MaybeCallable,
+    OptionalCallable,
+} from "@engine/types";
 
 interface BaseHotspot {
     id?: string;
@@ -65,8 +70,8 @@ export interface MapMenu {
     type: "menu";
     items: Array<OptionalCallable<LabelHotspot>>;
     position: {
-        x: number | (() => number);
-        y: number | (() => number);
+        x: MaybeCallable<number>;
+        y: MaybeCallable<number>;
     };
     direction?: "horizontal" | "vertical"; // Direction of the menu items, default is vertical
     props?: {

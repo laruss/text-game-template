@@ -10,7 +10,7 @@ export class Storage {
      *
      * @packageDocumentation https://www.npmjs.com/package/jsonpath
      * @param {JsonPath} jsonPath - The JSONPath query that specifies the data to retrieve from the storage.
-     * @return {Array<T>} An array of values that match the provided JSONPath query.
+     * @return {Array<any>} An array of values that match the provided JSONPath query.
      */
     static getValue<T>(jsonPath: JsonPath): Array<T> {
         return jp.query(storage, jsonPath) as Array<T>;

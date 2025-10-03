@@ -92,6 +92,7 @@ This allows content to be static or computed at runtime.
 ### Working with Game Entities
 
 **Creating entities:**
+
 ```typescript
 // src/game/entities/player.ts
 import { BaseGameObject } from "@engine/baseGameObject";
@@ -109,11 +110,12 @@ class Player extends BaseGameObject<{ health: number; name: string }> {
 // Auto-registers when instantiated
 export const player = new Player({
     id: "player",
-    variables: { health: 100, name: "Hero" }
+    variables: { health: 100, name: "Hero" },
 });
 ```
 
 **Using entities in React components:**
+
 ```typescript
 import { useGameEntity } from "@app/hooks";
 import { player } from "@game/entities/player";
@@ -125,6 +127,7 @@ function HealthBar() {
 ```
 
 **Important notes:**
+
 - Entities **auto-register** in `BaseGameObject` constructor
 - Always use `useGameEntity()` in React components to enable reactivity
 - Mutate `variables` properties directly - Valtio handles reactivity

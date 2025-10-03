@@ -28,11 +28,11 @@ const bubbleStyles = {
     }),
 } as const;
 
-type ConversationLineProps = {
+type ConversationLineProps = Readonly<{
     line: ConversationBubble;
     variant?: ConversationVariant;
-    onClick?: () => void; // Optional click handler for interaction
-};
+    onClick?: () => void;
+}>;
 
 const ConversationLine = ({
     line,
@@ -77,28 +77,29 @@ const ConversationLine = ({
     );
 };
 
-export const Conversation = ({
-    component,
-}: {
+type ConversationProps = Readonly<{
     component: ConversationComponent;
-}) => {
+}>;
+
+export const Conversation = ({ component }: ConversationProps) => {
     const [lines, setLines] = useState<Array<ConversationBubble>>([]);
+    const { appearance, content, props } = component;
 
     useEffect(() => {
-        if (component.appearance === "byClick") {
+        if (appearance === "byClick") {
             // If the conversation is set to appear by click, we can initialize it with an empty array
             setLines([]);
         } else {
             // If it appears at once, we can set all lines immediately
-            setLines(component.content);
+            setLines(content);
         }
-    }, [component.appearance, component.content]);
+    }, [appearance, content]);
 
     const onClick = () => {
-        if (component.appearance === "byClick") {
+        if (appearance === "byClick") {
             // If the conversation is set to appear by click, append the next line
             setLines((prevLines) => {
-                const nextLine = component.content[prevLines.length];
+                const nextLine = content[prevLines.length];
                 if (nextLine) {
                     return [...prevLines, nextLine];
                 }
@@ -109,7 +110,7 @@ export const Conversation = ({
     };
 
     return (
-        <div className={component.props?.className}>
+        <div className={props?.className}>
             {lines.map((line, index) => (
                 <ConversationLine key={index} onClick={onClick} line={line} />
             ))}

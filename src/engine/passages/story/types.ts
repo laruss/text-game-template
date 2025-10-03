@@ -1,4 +1,9 @@
-import { ButtonColor, ButtonVariant } from "@engine/types";
+import {
+    ButtonColor,
+    ButtonVariant,
+    EmptyObject,
+    InitVarsType,
+} from "@engine/types";
 import { ReactNode } from "react";
 
 export interface BaseComponent {
@@ -126,7 +131,10 @@ export type Component =
     | ActionsComponent
     | ConversationComponent
     | AnotherStoryComponent;
-export type ComponentCallback = () => Component | undefined;
+
+export type StoryContent = <T extends InitVarsType = EmptyObject>(
+    props: T
+) => Array<Component>;
 
 export type StoryOptions = {
     background?: {

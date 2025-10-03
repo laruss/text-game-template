@@ -15,10 +15,10 @@ export type GameSaveState = Record<string, unknown>;
 
 export type PassageType = "story" | "interactiveMap";
 
-export type MaybeCallable<T> = T | (() => T);
-export type MaybeOptionalCallable<T> = T | (() => T | undefined);
 export type Callable<T> = () => T;
-export type OptionalCallable<T> = () => T | undefined;
+export type MaybeCallable<T> = T | Callable<T>;
+export type OptionalCallable<T> = Callable<T | undefined>;
+export type MaybeOptionalCallable<T> = T | OptionalCallable<T>;
 
 export type ButtonVariant =
     | "solid"

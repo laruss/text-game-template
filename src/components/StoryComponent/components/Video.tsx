@@ -1,18 +1,19 @@
 import { VideoComponent } from "@engine/passages/story";
 import { twMerge } from "tailwind-merge";
 
-export const Video = ({ component }: { component: VideoComponent }) => (
+type VideoProps = Readonly<{
+    component: VideoComponent;
+}>;
+
+export const Video = ({ component: { props, content } }: VideoProps) => (
     <video
-        className={twMerge(
-            "max-w-200 max-h-200 mx-auto",
-            component.props?.className
-        )}
-        controls={component.props?.controls ?? false}
-        autoPlay={component.props?.autoPlay ?? true}
-        loop={component.props?.loop ?? true}
-        muted={component.props?.muted ?? false}
+        className={twMerge("max-w-200 max-h-200 mx-auto", props?.className)}
+        controls={props?.controls ?? false}
+        autoPlay={props?.autoPlay ?? true}
+        loop={props?.loop ?? true}
+        muted={props?.muted ?? true}
     >
-        <source src={component.content} />
+        <source src={content} />
         Your browser does not support the video tag.
     </video>
 );
