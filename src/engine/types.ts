@@ -13,7 +13,7 @@ export type Replace<T, K extends keyof T, TReplace> = Identity<
 
 export type GameSaveState = Record<string, unknown>;
 
-export type PassageType = "story" | "interactiveMap";
+export type PassageType = "story" | "interactiveMap" | "widget";
 
 export type Callable<T> = () => T;
 export type MaybeCallable<T> = T | Callable<T>;

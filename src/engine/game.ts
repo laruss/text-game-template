@@ -1,5 +1,5 @@
 import { BaseGameObject } from "@engine/baseGameObject";
-import { STORAGE_SYSTEM_PATH } from "@engine/constants";
+import { STORAGE_SYSTEM_PATH, SYSTEM_PASSAGE_NAMES } from "@engine/constants";
 import { Passage } from "@engine/passages/passage";
 import { Storage } from "@engine/storage";
 import { GameSaveState, JsonPath } from "@engine/types";
@@ -56,8 +56,16 @@ export class Game {
      * @return {void} Does not return a value.
      */
     static registerPassage(...passages: Array<Passage>): void {
+        const systemPassages = Object.values(SYSTEM_PASSAGE_NAMES);
+
         passages.forEach((passage) => {
-            if (passagesRegistry.has(passage.id)) {
+            if (
+                passagesRegistry.has(passage.id) &&
+                // letting user to re-register system passages
+                !systemPassages.includes(
+                    passage.id as (typeof systemPassages)[number]
+                )
+            ) {
                 throw new Error(
                     `Passage "${passage.id}" is already registered.`
                 );
