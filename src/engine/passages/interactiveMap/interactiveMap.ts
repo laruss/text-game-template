@@ -15,11 +15,8 @@ export class InteractiveMap extends Passage {
     display<T extends InitVarsType = EmptyObject>(
         props: T = {} as T
     ): InteractiveMapType {
-        // todo: should we use props here?
-        console.log(props);
-
         const hotspots = this.options.hotspots
-            .map((callback) => callback())
+            .map((callback) => callIfFunction(callback, props))
             .filter((hotspot) => hotspot !== undefined);
 
         const image = callIfFunction(this.options.image);

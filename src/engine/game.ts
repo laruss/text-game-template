@@ -3,7 +3,7 @@ import { STORAGE_SYSTEM_PATH } from "@engine/constants";
 import { Passage } from "@engine/passages/passage";
 import { Storage } from "@engine/storage";
 import { GameSaveState, JsonPath } from "@engine/types";
-import { proxy } from "valtio";
+import { proxy, subscribe } from "valtio";
 
 const objectRegistry = new Map<string, BaseGameObject>();
 const passagesRegistry = new Map<string, Passage>();
@@ -23,6 +23,12 @@ export class Game {
     private static state = proxy({
         currentPassageId: null as string | null,
     });
+
+    private static autoSaveEnabled = false;
+    private static saveTimer: ReturnType<typeof setTimeout> | null = null;
+    private static unsubscribeFunctions: Array<() => void> = [];
+    private static readonly AUTO_SAVE_KEY = "gameAutoSave";
+    private static readonly SAVE_DEBOUNCE_MS = 500;
 
     /**
      * Registers and proxies the provided game objects for further use by adding them to the object registry.
@@ -185,5 +191,104 @@ export class Game {
         for (const [, object] of objectRegistry) {
             object.load();
         }
+    }
+
+    /**
+     * Saves the current game state to session storage with debouncing.
+     */
+    private static saveToSessionStorage(): void {
+        if (Game.saveTimer) {
+            clearTimeout(Game.saveTimer);
+        }
+
+        Game.saveTimer = setTimeout(() => {
+            const state = Game.getState();
+            sessionStorage.setItem(Game.AUTO_SAVE_KEY, JSON.stringify(state));
+            console.log("Game state auto-saved to session storage");
+        }, Game.SAVE_DEBOUNCE_MS);
+    }
+
+    /**
+     * Enables auto-save functionality. Subscribes to all game state changes
+     * and automatically saves to session storage.
+     */
+    static enableAutoSave(): void {
+        if (Game.autoSaveEnabled) {
+            console.warn("Auto-save is already enabled");
+            return;
+        }
+
+        Game.autoSaveEnabled = true;
+
+        // Subscribe to Game state changes
+        const unsubGame = subscribe(Game.state, () => {
+            Game.saveToSessionStorage();
+        });
+        Game.unsubscribeFunctions.push(unsubGame);
+
+        // Subscribe to all registered entities
+        for (const [, object] of objectRegistry) {
+            const unsubEntity = subscribe(object, () => {
+                Game.saveToSessionStorage();
+            });
+            Game.unsubscribeFunctions.push(unsubEntity);
+        }
+
+        console.log("Auto-save enabled");
+    }
+
+    /**
+     * Disables auto-save functionality and clears all subscriptions.
+     */
+    static disableAutoSave(): void {
+        if (!Game.autoSaveEnabled) {
+            console.warn("Auto-save is already disabled");
+            return;
+        }
+
+        // Clear debounce timer
+        if (Game.saveTimer) {
+            clearTimeout(Game.saveTimer);
+            Game.saveTimer = null;
+        }
+
+        // Unsubscribe all listeners
+        Game.unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+        Game.unsubscribeFunctions = [];
+
+        Game.autoSaveEnabled = false;
+        console.log("Auto-save disabled");
+    }
+
+    /**
+     * Loads game state from session storage if available.
+     *
+     * @returns {boolean} True if state was loaded successfully, false otherwise.
+     */
+    static loadFromSessionStorage(): boolean {
+        const savedState = sessionStorage.getItem(Game.AUTO_SAVE_KEY);
+
+        if (!savedState) {
+            console.log("No auto-saved state found in session storage");
+            return false;
+        }
+
+        try {
+            const state = JSON.parse(savedState) as GameSaveState;
+            Game.setState(state);
+            console.log("Game state loaded from session storage");
+            return true;
+        } catch (error) {
+            console.error("Failed to load state from session storage:", error);
+            return false;
+        }
+    }
+
+    /**
+     * Clears the auto-saved state from session storage.
+     */
+    static clearAutoSave(): void {
+        sessionStorage.removeItem(Game.AUTO_SAVE_KEY);
+        console.log("Auto-saved state cleared from session storage");
     }
 }

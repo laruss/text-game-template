@@ -1,3 +1,4 @@
+import { Game } from "@engine/game";
 import { EmptyObject, InitVarsType, PassageType } from "@engine/types";
 
 export class Passage {
@@ -7,6 +8,7 @@ export class Passage {
     constructor(id: string, type: PassageType) {
         this.id = id;
         this.type = type;
+        Game.registerPassage(this);
     }
 
     // this method should be overridden by subclasses

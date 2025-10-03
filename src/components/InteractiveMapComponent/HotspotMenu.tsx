@@ -1,5 +1,6 @@
 import { evalIfFunction } from "@app/utils";
 import { ImagePositionInfo } from "@components/InteractiveMapComponent/types";
+import { callIfFunction } from "@engine/helpers";
 import { MapMenu } from "@engine/passages/interactiveMap";
 import { Button, Tooltip } from "@heroui/react";
 import { useEffect, useMemo, useRef } from "react";
@@ -15,7 +16,7 @@ export const HotspotMenu = ({ menu, imagePositionInfo }: Props) => {
     const items = useMemo(
         () =>
             menu.items
-                .map((itemCallback) => itemCallback())
+                .map((item) => callIfFunction(item))
                 .filter((item) => item !== undefined),
         [menu.items]
     );

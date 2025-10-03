@@ -1,4 +1,3 @@
-import { Game } from "@engine/game";
 import { Passage } from "@engine/passages/passage";
 import { EmptyObject, InitVarsType } from "@engine/types";
 
@@ -12,7 +11,6 @@ export class Story extends Passage {
         super(id, "story");
         this.content = content;
         this.options = options;
-        Game.registerPassage(this);
     }
 
     /**

@@ -1,11 +1,5 @@
 import { Game } from "@engine/game";
-import {
-    newInteractiveMap,
-    newMapImageHotspot,
-    newMapLabelHotspot,
-    newMapMenu,
-    newMapMenuItem,
-} from "@engine/passages/interactiveMap";
+import { newInteractiveMap } from "@engine/passages/interactiveMap";
 
 export const testInteractiveMap = newInteractiveMap("testMap", {
     image: "city.png",
@@ -17,7 +11,7 @@ export const testInteractiveMap = newInteractiveMap("testMap", {
             content: "Hotspot",
             position: { x: 50, y: 50 },
         }),
-        newMapLabelHotspot({
+        {
             action: () => Game.jumpTo("testMap2"),
             type: "label",
             content: "Hotspot 2",
@@ -26,8 +20,8 @@ export const testInteractiveMap = newInteractiveMap("testMap", {
                 content: "This is a tooltip for Hotspot 2",
                 position: "top",
             },
-        }),
-        newMapImageHotspot({
+        },
+        () => ({
             action: () => console.log("Image Hotspot clicked"),
             type: "image",
             content: {
@@ -57,7 +51,7 @@ export const testInteractiveMap2 = newInteractiveMap("testMap2", {
             content: "Hotspot",
             position: { x: 50, y: 50 },
         }),
-        newMapLabelHotspot({
+        {
             action: () => console.log("Hotspot 2 clicked"),
             type: "label",
             content: "Hotspot 2",
@@ -66,22 +60,22 @@ export const testInteractiveMap2 = newInteractiveMap("testMap2", {
                 content: "This is a tooltip for Hotspot 2",
                 position: "top",
             },
-        }),
-        newMapMenu({
+        },
+        {
             type: "menu",
             items: [
-                newMapMenuItem({
+                {
                     type: "label",
                     content: "Menu Item 1",
                     action: () => console.log("Menu Item 1 clicked"),
-                }),
-                newMapMenuItem({
+                },
+                () => ({
                     type: "label",
                     content: "Menu Item 2",
                     action: () => console.log("Menu Item 2 clicked"),
                 }),
             ],
             position: { x: 80, y: 80 },
-        }),
+        },
     ],
 });

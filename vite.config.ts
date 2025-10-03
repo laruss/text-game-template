@@ -7,6 +7,7 @@ import { viteSingleFile } from "vite-plugin-singlefile";
 export default defineConfig({
     plugins: [react(), tailwindcss(), viteSingleFile()],
     base: "./",
+    publicDir: false, // Disable default public directory copying
     resolve: {
         alias: {
             "@": "/src",
