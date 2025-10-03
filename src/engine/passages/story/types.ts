@@ -111,7 +111,7 @@ export type ConversationAppearance = "atOnce" | "byClick"; // Define how the con
 export interface ConversationComponent extends BaseComponent {
     type: "conversation";
     content: Array<ConversationBubble>;
-    appearance?: ConversationAppearance, // default is "atOnce"
+    appearance?: ConversationAppearance; // default is "atOnce"
     props?: {
         variant?: ConversationVariant; // Type of conversation display
         className?: string; // CSS class for styling the conversation

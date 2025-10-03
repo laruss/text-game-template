@@ -1,5 +1,8 @@
 import { evalIfFunction } from "@app/utils";
-import { LabelHotspot as LabelHotspotType, MapLabelHotspot } from "@engine/passages/interactiveMap";
+import {
+    LabelHotspot as LabelHotspotType,
+    MapLabelHotspot,
+} from "@engine/passages/interactiveMap";
 import { Button } from "@heroui/react";
 
 type LabelHotspotProps = {

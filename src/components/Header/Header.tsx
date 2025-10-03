@@ -1,19 +1,17 @@
-import { useWatch } from "@app/hooks";
+import { useGameEntity } from "@app/hooks";
 import { useGameIsStarted } from "@app/hooks/useGameIsStarted";
 import { useSaveLoadModal } from "@components/SaveLoadModal";
 import { environment } from "@game/entities/environment";
 import { FaRegSave } from "react-icons/fa";
 
 export const Header = () => {
-    const env = useWatch(environment);
+    const env = useGameEntity(environment);
     const isStarted = useGameIsStarted();
     const openSaveLoadModal = useSaveLoadModal();
 
     return (
         <header>
-            <div
-                className="w-full h-16 bg-gray-200 flex items-center justify-between px-4 shadow-md"
-            >
+            <div className="w-full h-16 bg-gray-200 flex items-center justify-between px-4 shadow-md">
                 <div className="flex items-center gap-6">
                     <div>
                         <h1>Time:</h1>
@@ -26,7 +24,10 @@ export const Header = () => {
                 </div>
                 <div className="flex gap-2">
                     {isStarted && (
-                        <FaRegSave className="w-10 h-10 cursor-pointer" onClick={() => openSaveLoadModal()} />
+                        <FaRegSave
+                            className="w-10 h-10 cursor-pointer"
+                            onClick={() => openSaveLoadModal()}
+                        />
                     )}
                 </div>
                 <div className="flex gap-2">

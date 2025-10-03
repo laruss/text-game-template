@@ -5,7 +5,7 @@ export const Video = ({ component }: { component: VideoComponent }) => (
     <video
         className={twMerge(
             "max-w-200 max-h-200 mx-auto",
-            component.props?.className,
+            component.props?.className
         )}
         controls={component.props?.controls ?? false}
         autoPlay={component.props?.autoPlay ?? true}

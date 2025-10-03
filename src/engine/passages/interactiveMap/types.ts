@@ -71,7 +71,7 @@ export interface MapMenu {
     direction?: "horizontal" | "vertical"; // Direction of the menu items, default is vertical
     props?: {
         className?: string;
-    },
+    };
 }
 
 export type AnyHotspot =

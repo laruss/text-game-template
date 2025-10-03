@@ -1,3 +1,4 @@
+import { Game } from "@engine/game";
 import { Passage } from "@engine/passages/passage";
 import { EmptyObject, InitVarsType } from "@engine/types";
 
@@ -10,11 +11,12 @@ export class Story extends Passage {
     constructor(
         id: string,
         components: Array<ComponentCallback | Component>,
-        options: StoryOptions = {},
+        options: StoryOptions = {}
     ) {
         super(id, "story");
         this.components = components;
         this.options = options;
+        Game.registerPassage(this);
     }
 
     /**
@@ -35,7 +37,9 @@ export class Story extends Passage {
         );
 
         return {
-            components: components.filter((component) => component !== undefined),
+            components: components.filter(
+                (component) => component !== undefined
+            ),
             options: this.options,
         };
     }

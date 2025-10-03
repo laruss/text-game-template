@@ -35,7 +35,8 @@ export const useLoadGame = (id?: number) => {
 
     const confirmLoad = useConfirmation({
         title: "Load Game",
-        message: "Are you sure you want to load this game? This will overwrite your current progress.",
+        message:
+            "Are you sure you want to load this game? This will overwrite your current progress.",
         confirmText: "Yes",
         cancelText: "No",
         onConfirm: loadGameHandler,

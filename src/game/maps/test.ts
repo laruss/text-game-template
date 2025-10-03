@@ -38,7 +38,7 @@ export const testInteractiveMap = newInteractiveMap("testMap", {
             },
             // isDisabled: true,
             position: { x: 70, y: 70 },
-            props: { zoom: '20%' },
+            props: { zoom: "20%" },
             tooltip: {
                 content: "This is an image hotspot",
                 position: "bottom",

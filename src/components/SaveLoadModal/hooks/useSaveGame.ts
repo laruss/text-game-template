@@ -10,20 +10,23 @@ export const useSaveGame = (slotNumber: number) => {
 
     const saveGameHandler = useCallback(() => {
         const data = Game.getState();
-        saveGame(`${slotNumber}`, data).then(() => {
-            queryClient.invalidateQueries({ queryKey: ["saves"] });
-        }).catch((e) => {
-            addToast({
-                title: "An error occurred",
-                description: "Please, check the console for more details.",
+        saveGame(`${slotNumber}`, data)
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: ["saves"] });
+            })
+            .catch((e) => {
+                addToast({
+                    title: "An error occurred",
+                    description: "Please, check the console for more details.",
+                });
+                console.error("Failed to save game:", e);
             });
-            console.error("Failed to save game:", e);
-        });
     }, [queryClient, slotNumber]);
 
     const confirmSave = useConfirmation({
         title: "Rewrite save",
-        message: "Are you sure you want to overwrite this save? This action cannot be undone.",
+        message:
+            "Are you sure you want to overwrite this save? This action cannot be undone.",
         confirmText: "Yes",
         cancelText: "No",
         onConfirm: async () => saveGameHandler(),

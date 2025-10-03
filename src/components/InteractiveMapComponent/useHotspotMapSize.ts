@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-import { ImagePositionInfo, UseHotspotMapSizeProps, UseHotspotMapSizeResult } from "./types";
+import {
+    ImagePositionInfo,
+    UseHotspotMapSizeProps,
+    UseHotspotMapSizeResult,
+} from "./types";
 
 export const useHotspotMapSize = ({
     isLoading,

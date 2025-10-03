@@ -10,23 +10,23 @@ The engine is built with React and TypeScript, utilizing Vite for fast developme
 
 - **Passage-Based Navigation**: Game flow is organized into passages, which can be of various types (e.g., story narratives, interactive maps).
 - **Interactive Maps**:
-  - Display images as maps with optional background images.
-  - Support for clickable hotspots (labels, images) positioned on the map.
-  - Hotspots can trigger actions, such as navigating to other passages or executing custom logic.
-  - Support for side-aligned hotspots and context menus on maps.
+    - Display images as maps with optional background images.
+    - Support for clickable hotspots (labels, images) positioned on the map.
+    - Hotspots can trigger actions, such as navigating to other passages or executing custom logic.
+    - Support for side-aligned hotspots and context menus on maps.
 - **Story Passages**:
-  - Render rich story content including text, headers, images, and videos.
-  - Display interactive elements like action buttons and conversation bubbles.
+    - Render rich story content including text, headers, images, and videos.
+    - Display interactive elements like action buttons and conversation bubbles.
 - **State Management**: Robust game state management using Valtio, allowing for reactive updates to the UI.
 - **Save/Load System**: Built-in functionality for saving and loading game progress.
 - **Modern UI**:
-  - Clean and responsive user interface built with React and Heroui.
-  - Styled with Tailwind CSS.
-  - Smooth transitions and animations powered by Framer Motion.
+    - Clean and responsive user interface built with React and Heroui.
+    - Styled with Tailwind CSS.
+    - Smooth transitions and animations powered by Framer Motion.
 - **Developer Friendly**:
-  - Written in TypeScript for type safety.
-  - Uses Vite for a fast development experience.
-  - Bun for efficient package management and runtime.
+    - Written in TypeScript for type safety.
+    - Uses Vite for a fast development experience.
+    - Bun for efficient package management and runtime.
 
 ## Tech Stack
 
@@ -50,16 +50,16 @@ The engine is built with React and TypeScript, utilizing Vite for fast developme
 
 1. Clone the repository:
 
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
 2. Install dependencies using Bun:
 
-   ```bash
-   bun install
-   ```
+    ```bash
+    bun install
+    ```
 
 ### Running the Project
 
@@ -75,8 +75,8 @@ This will typically start the application on `http://localhost:5173`.
 
 - **Game (`src/engine/game.ts`)**: The central class for managing game state, passages, and entities.
 - **Passage (`src/engine/passages/passage.ts`)**: The base class for different types of game screens or scenes.
-  - **InteractiveMap (`src/engine/passages/interactiveMap/interactiveMap.ts`)**: A passage type for displaying maps with interactive hotspots. Game-specific maps are defined in `src/game/maps/`.
-  - **Story (`src/engine/passages/story/story.ts`)**: A passage type for displaying narrative content, actions, and dialogues. Game-specific stories are defined in `src/game/stories/`.
+    - **InteractiveMap (`src/engine/passages/interactiveMap/interactiveMap.ts`)**: A passage type for displaying maps with interactive hotspots. Game-specific maps are defined in `src/game/maps/`.
+    - **Story (`src/engine/passages/story/story.ts`)**: A passage type for displaying narrative content, actions, and dialogues. Game-specific stories are defined in `src/game/stories/`.
 - **Hotspots**: Interactive elements on an `InteractiveMap` that can trigger game events or navigation.
 - **Components (`src/components/`)**: Reusable React components that make up the game's UI.
 - **Entities (`src/game/entities/`)**: Game objects or characters that can hold state and interact within the game world.

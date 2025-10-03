@@ -1,7 +1,6 @@
 import "./index.css";
 import "@game/maps";
 import "@game/stories";
-import "@game/entities/registry";
 
 import { ConfirmationDialogProvider } from "@components/ConfiramtionDialog";
 import { SaveLoadModalProvider } from "@components/SaveLoadModal";
@@ -11,8 +10,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { App } from "./App";
+import { Game } from "@engine/game";
 
 const queryClient = new QueryClient();
+
+Game.setCurrent("testStory");
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>

@@ -16,5 +16,5 @@ export default defineConfig({
             "@game": "/src/game",
         },
     },
-    build: {}
+    build: {},
 });

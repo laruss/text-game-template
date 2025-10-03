@@ -10,20 +10,12 @@ export const MainMenu = () => {
         <div>
             Main Menu
             <div className="flex flex-col">
-                <button
-                    onClick={() => Game.jumpTo("testMap")}
-                >
-                    New Game
-                </button>
-                <button>
-                    Continue
-                </button>
+                <button onClick={() => Game.jumpTo("testMap")}>New Game</button>
+                <button>Continue</button>
                 <button onClick={() => openSaveLoadModal({ isOnlyLoad: true })}>
                     Load Game
                 </button>
-                <button onClick={openDialog}>
-                    Test
-                </button>
+                <button onClick={openDialog}>Test</button>
             </div>
         </div>
     );

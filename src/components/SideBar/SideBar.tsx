@@ -7,7 +7,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
 type SideBarProps = {
-    side: 'left' | 'right';
+    side: "left" | "right";
     isClosedByDefault?: boolean;
     children?: ReactNode;
     itemsWhenClosed?: ReactNode[];
@@ -17,40 +17,41 @@ type SideBarProps = {
     closedWidth?: number;
 };
 
-const contentVariants = (side: SideBarProps['side']) => ({
-    open: {
-        opacity: 1,
-        x: 0,
-        transition: {
-            delay: 0.1,
-            duration: 0.3
-        }
-    },
-    closed: {
-        opacity: 0,
-        x: side === 'left' ? -20 : 20,
-        transition: {
-            duration: 0.2
-        }
-    }
-} as const);
+const contentVariants = (side: SideBarProps["side"]) =>
+    ({
+        open: {
+            opacity: 1,
+            x: 0,
+            transition: {
+                delay: 0.1,
+                duration: 0.3,
+            },
+        },
+        closed: {
+            opacity: 0,
+            x: side === "left" ? -20 : 20,
+            transition: {
+                duration: 0.2,
+            },
+        },
+    }) as const;
 
 const closedItemsVariants = {
     open: {
         opacity: 0,
         scale: 0.8,
         transition: {
-            duration: 0.2
-        }
+            duration: 0.2,
+        },
     },
     closed: {
         opacity: 1,
         scale: 1,
         transition: {
             delay: 0.1,
-            duration: 0.3
-        }
-    }
+            duration: 0.3,
+        },
+    },
 };
 
 export const SideBar = ({
@@ -95,8 +96,8 @@ export const SideBar = ({
             transition: {
                 type: "spring",
                 stiffness: 300,
-                damping: 30
-            }
+                damping: 30,
+            },
         },
         closed: {
             width: closedWidth,
@@ -106,15 +107,15 @@ export const SideBar = ({
             transition: {
                 type: "spring",
                 stiffness: 300,
-                damping: 30
-            }
-        }
+                damping: 30,
+            },
+        },
     };
 
     const baseClasses =
         "h-full bg-default-50 dark:bg-default-100 border-r border-divider dark:border-default-200 " +
         "shadow-medium flex flex-col relative overflow-hidden";
-    const sideSpecificClasses = side === 'right' ? 'border-r-0 border-l' : '';
+    const sideSpecificClasses = side === "right" ? "border-r-0 border-l" : "";
 
     return (
         <motion.div
@@ -125,9 +126,12 @@ export const SideBar = ({
         >
             {/* Toggle Button */}
             {showToggleButton && (
-                <div className="absolute top-4 z-10" style={{
-                    [side === 'left' ? 'right' : 'left']: '8px'
-                }}>
+                <div
+                    className="absolute top-4 z-10"
+                    style={{
+                        [side === "left" ? "right" : "left"]: "8px",
+                    }}
+                >
                     <Button
                         isIconOnly
                         variant="flat"
@@ -135,10 +139,17 @@ export const SideBar = ({
                         onPress={toggleSidebar}
                         className="bg-default-100 dark:bg-default-200"
                     >
-                        {side === 'left' ?
-                            (isOpen ? <FaChevronLeft /> : <FaChevronRight />) :
-                            (isOpen ? <FaChevronRight /> : <FaChevronLeft />)
-                        }
+                        {side === "left" ? (
+                            isOpen ? (
+                                <FaChevronLeft />
+                            ) : (
+                                <FaChevronRight />
+                            )
+                        ) : isOpen ? (
+                            <FaChevronRight />
+                        ) : (
+                            <FaChevronLeft />
+                        )}
                     </Button>
                 </div>
             )}

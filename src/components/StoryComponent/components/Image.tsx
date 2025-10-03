@@ -23,7 +23,8 @@ const ImageModal = ({ isOpen, onOpenChange, src, alt }: ImageModalProps) => (
 
 export const Image = ({ component }: { component: ImageComponent }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const shouldBeClickable = Boolean(component.props?.onClick) || !component.props?.disableModal;
+    const shouldBeClickable =
+        Boolean(component.props?.onClick) || !component.props?.disableModal;
 
     const onClickHandler = () => {
         if (component.props?.onClick) {

@@ -1,5 +1,8 @@
 import { evalIfFunction } from "@app/utils";
-import { ImageHotspot as ImageHotspotType, MapImageHotspot } from "@engine/passages/interactiveMap";
+import {
+    ImageHotspot as ImageHotspotType,
+    MapImageHotspot,
+} from "@engine/passages/interactiveMap";
 import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 

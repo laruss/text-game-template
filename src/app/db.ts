@@ -107,7 +107,9 @@ export async function loadGame(id: number): Promise<GameSave | undefined> {
  * @param name - Name of the save to load
  * @returns Promise<GameSave | undefined> - The save data or undefined if not found
  */
-export async function loadGameByName(name: string): Promise<GameSave | undefined> {
+export async function loadGameByName(
+    name: string
+): Promise<GameSave | undefined> {
     return db.saves.where("name").equals(name).first();
 }
 

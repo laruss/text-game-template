@@ -8,7 +8,8 @@ export const useDeleteSlot = (id?: number) => {
 
     return useConfirmation({
         title: "Delete Save",
-        message: "Are you sure you want to delete this save? This action cannot be undone.",
+        message:
+            "Are you sure you want to delete this save? This action cannot be undone.",
         confirmText: "Yes",
         cancelText: "No",
         onConfirm: async () => {

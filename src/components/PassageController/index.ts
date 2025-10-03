@@ -1,1 +1,1 @@
-export * from './PassageController';
+export * from "./PassageController";

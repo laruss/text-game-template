@@ -1,11 +1,7 @@
 import { options } from "@game/options";
 import CryptoJS from "crypto-js";
 
-import {
-    ITERATIONS,
-    KEY_SIZE,
-    SAVE_POSTFIX,
-} from "./constants";
+import { ITERATIONS, KEY_SIZE, SAVE_POSTFIX } from "./constants";
 
 const getPassword = () => `${options.gameId}.${SAVE_POSTFIX}`;
 

@@ -12,6 +12,8 @@ export class Passage {
     // this method should be overridden by subclasses
     display<T extends InitVarsType = EmptyObject>(props: T = {} as T) {
         console.log(`Displaying passage: ${this.id} with props:`, props);
-        throw new Error(`Display method not implemented for passage: ${this.id}`);
+        throw new Error(
+            `Display method not implemented for passage: ${this.id}`
+        );
     }
 }

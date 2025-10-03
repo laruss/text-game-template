@@ -1,9 +1,12 @@
 import { useCallback, useContext } from "react";
 
-import { ConfirmationDialogContext, ConfirmationDialogContextType } from "../context";
+import {
+    ConfirmationDialogContext,
+    ConfirmationDialogContextType,
+} from "../context";
 
 export const useConfirmation = (
-    options: ConfirmationDialogContextType['options'] = {
+    options: ConfirmationDialogContextType["options"] = {
         title: "Are you sure?",
         message: "This action cannot be undone.",
         confirmText: "Confirm",

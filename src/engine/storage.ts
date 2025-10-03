@@ -51,7 +51,7 @@ export class Storage {
      */
     static getState(): GameSaveState {
         return storage;
-    };
+    }
 
     /**
      * Sets the entire state of the storage to a new value.
@@ -59,8 +59,8 @@ export class Storage {
      * @param {GameSaveState} state - The new state to set for the storage.
      */
     static setState(state: GameSaveState): void {
-        if (typeof state !== 'object' || state === null) {
-            throw new Error('Invalid state provided. Expected an object.');
+        if (typeof state !== "object" || state === null) {
+            throw new Error("Invalid state provided. Expected an object.");
         }
         // Clear the current storage
         for (const key in storage) {
