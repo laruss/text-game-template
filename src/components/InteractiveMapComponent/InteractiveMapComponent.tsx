@@ -68,7 +68,7 @@ export const InteractiveMapComponent = ({
                         <div
                             className={twMerge(
                                 "w-full z-20 overflow-y-hidden overflow-x-auto scrollbar-hide max-h-100",
-                                displayable.classNames?.topHotspots,
+                                displayable.classNames?.topHotspots
                             )}
                         >
                             {topHotspots.map((hotspot, index) => (
@@ -79,7 +79,7 @@ export const InteractiveMapComponent = ({
                             <div
                                 className={twMerge(
                                     "h-full z-20 overflow-x-hidden overflow-y-auto scrollbar-hide max-w-100",
-                                    displayable.classNames?.leftHotspots,
+                                    displayable.classNames?.leftHotspots
                                 )}
                             >
                                 {leftHotspots.map((hotspot, index) => (
@@ -111,7 +111,7 @@ export const InteractiveMapComponent = ({
                             <div
                                 className={twMerge(
                                     "h-full z-20 overflow-x-hidden overflow-y-auto scrollbar-hide max-w-100",
-                                    displayable.classNames?.rightHotspots,
+                                    displayable.classNames?.rightHotspots
                                 )}
                             >
                                 {rightHotspots.map((hotspot, index) => (
@@ -125,7 +125,7 @@ export const InteractiveMapComponent = ({
                         <div
                             className={twMerge(
                                 "w-full z-20 overflow-y-hidden overflow-x-auto scrollbar-hide max-h-100",
-                                displayable.classNames?.bottomHotspots,
+                                displayable.classNames?.bottomHotspots
                             )}
                         >
                             {bottomHotspots.map((hotspot, index) => (

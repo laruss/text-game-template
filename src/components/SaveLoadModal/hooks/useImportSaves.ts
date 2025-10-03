@@ -1,4 +1,4 @@
-import { deleteAllGameSaves, GameSave,saveGame } from "@app/db";
+import { deleteAllGameSaves, GameSave, saveGame } from "@app/db";
 import { SAFE_FILE_EXTENSION } from "@components/SaveLoadModal/constants";
 import { decodeSf } from "@components/SaveLoadModal/helpers";
 import { addToast } from "@heroui/react";
@@ -76,9 +76,8 @@ export const useImportSaves = () => {
             // Notify user of successful import
             addToast({
                 title: "Saves imported",
-                description: `Successfully imported ${saves.length} save${saves.length !== 1 ? 's' : ''}.`,
+                description: `Successfully imported ${saves.length} save${saves.length !== 1 ? "s" : ""}.`,
             });
-
         } catch (error) {
             // Log error for debugging
             console.error("Failed to import saves:", error);
@@ -86,7 +85,8 @@ export const useImportSaves = () => {
             // Notify user of error
             addToast({
                 title: "Import failed",
-                description: "Failed to import saves. Please check the console for more details.",
+                description:
+                    "Failed to import saves. Please check the console for more details.",
             });
         }
     }, [queryClient]);

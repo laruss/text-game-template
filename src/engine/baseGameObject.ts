@@ -1,3 +1,4 @@
+import { Game } from "@engine/game";
 import { Storage } from "@engine/storage";
 import { InitVarsType, JsonPath } from "@engine/types";
 import { snapshot } from "valtio";
@@ -7,9 +8,10 @@ export class BaseGameObject<VariablesType extends InitVarsType = InitVarsType> {
     readonly id: string;
     protected _variables: VariablesType;
 
-    constructor(props: { id: string, variables?: VariablesType }) {
+    constructor(props: { id: string; variables?: VariablesType }) {
         this.id = props.id;
-        this._variables = props.variables || {} as VariablesType;
+        this._variables = props.variables || ({} as VariablesType);
+        Game.registerEntity(this);
     }
 
     get variables(): VariablesType {
@@ -30,12 +32,9 @@ export class BaseGameObject<VariablesType extends InitVarsType = InitVarsType> {
                 delete this._variables[key];
             }
         }
-        console.log(`Object ${this.id} loaded variables:`, snapshot(this._variables));
     }
 
-    // save variables to the game state
     save() {
         Storage.setValue(this.path, snapshot(this._variables));
-        console.log(`Object ${this.id} saved variables:`, snapshot(this._variables));
     }
 }

@@ -1,4 +1,4 @@
-import { ButtonColor, ButtonVariant, OptionalCallable } from "@engine/types";
+import { ButtonColor, ButtonVariant, MaybeCallable } from "@engine/types";
 
 interface BaseHotspot {
     id?: string;
@@ -63,15 +63,15 @@ export interface SideImageHotspot extends ImageHotspot, SideHotspot {}
 
 export interface MapMenu {
     type: "menu";
-    items: Array<OptionalCallable<LabelHotspot>>;
+    items: Array<MaybeCallable<LabelHotspot | undefined>>;
     position: {
-        x: number | (() => number);
-        y: number | (() => number);
+        x: MaybeCallable<number>;
+        y: MaybeCallable<number>;
     };
     direction?: "horizontal" | "vertical"; // Direction of the menu items, default is vertical
     props?: {
         className?: string;
-    },
+    };
 }
 
 export type AnyHotspot =
@@ -85,7 +85,7 @@ export type HotspotCallback = () => AnyHotspot | undefined;
 export type InteractiveMapOptions = {
     caption?: string;
     image: string | (() => string); // URL or path to the map image
-    hotspots: Array<HotspotCallback>;
+    hotspots: Array<MaybeCallable<AnyHotspot | undefined>>;
     bgImage?: string | (() => string); // URL or path to the background image
     props?: {
         /** Opacity of the background image */

@@ -1,1 +1,1 @@
-export * from './StoryComponent';
+export * from "./StoryComponent";

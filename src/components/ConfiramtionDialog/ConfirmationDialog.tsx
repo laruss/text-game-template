@@ -1,4 +1,11 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import {
+    Button,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+} from "@heroui/react";
 
 import { useConfirmationDialogState } from "./hooks";
 
@@ -18,11 +25,10 @@ export const ConfirmationDialog = () => {
             }}
         >
             <ModalContent>
-                <ModalHeader>
-                    {options.title || "Confirm Action"}
-                </ModalHeader>
+                <ModalHeader>{options.title || "Confirm Action"}</ModalHeader>
                 <ModalBody>
-                    {options.message || "Are you sure you want to proceed with this action?"}
+                    {options.message ||
+                        "Are you sure you want to proceed with this action?"}
                 </ModalBody>
                 <ModalFooter>
                     <div className="flex gap-2 justify-end">

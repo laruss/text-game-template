@@ -2,6 +2,9 @@ import { options } from "@game/options";
 import { type EntityTable } from "dexie";
 import Dexie from "dexie";
 
+// Constants
+export const SYSTEM_SAVE_NAME = "__SYSTEM_INITIAL_STATE__" as const;
+
 // Define interfaces for our database entities
 export interface GameSave {
     id?: number;
@@ -11,6 +14,7 @@ export interface GameSave {
     version: string; // Game version when the save was created
     screenshot?: string; // Base64 encoded screenshot
     description?: string;
+    isSystemSave?: boolean; // Mark as system save (won't be shown in UI)
 }
 
 export interface GameSettings {
@@ -32,6 +36,12 @@ export class GameDatabase extends Dexie {
         this.version(1).stores({
             saves: "++id, name, timestamp", // Auto-incrementing id, indexed name and timestamp
             settings: "++id, &key, timestamp", // Auto-incrementing id, unique key, indexed timestamp
+        });
+
+        // Migration to version 2: Add isSystemSave field
+        this.version(2).stores({
+            saves: "++id, name, timestamp, isSystemSave", // Add isSystemSave to indexed fields
+            settings: "++id, &key, timestamp",
         });
     }
 }
@@ -107,17 +117,19 @@ export async function loadGame(id: number): Promise<GameSave | undefined> {
  * @param name - Name of the save to load
  * @returns Promise<GameSave | undefined> - The save data or undefined if not found
  */
-export async function loadGameByName(name: string): Promise<GameSave | undefined> {
+export async function loadGameByName(
+    name: string
+): Promise<GameSave | undefined> {
     return db.saves.where("name").equals(name).first();
 }
 
 /**
- * Retrieves all saved games from the database.
+ * Retrieves all saved games from the database (excluding system saves).
  *
  * @return {Promise<GameSave[]>} A promise that resolves to an array of game save objects.
  */
 export async function getAllSaves(): Promise<GameSave[]> {
-    return db.saves.toArray();
+    return db.saves.filter((save) => !save.isSystemSave).toArray();
 }
 
 /**
@@ -208,4 +220,46 @@ export async function getAllSettings(): Promise<
  */
 export async function deleteSetting(key: string): Promise<void> {
     await db.settings.where("key").equals(key).delete();
+}
+
+/**
+ * Retrieves the system save from the database.
+ *
+ * @return {Promise<GameSave | undefined>} A promise that resolves to the system save or undefined if not found.
+ */
+export async function getSystemSave(): Promise<GameSave | undefined> {
+    return db.saves.where("name").equals(SYSTEM_SAVE_NAME).first();
+}
+
+/**
+ * Creates or updates the system save with the provided game data.
+ *
+ * @param {Record<string, unknown>} gameData - The game state data to save as the system initial state.
+ * @return {Promise<number>} A promise that resolves to the ID of the system save.
+ */
+export async function createOrUpdateSystemSave(
+    gameData: Record<string, unknown>
+): Promise<number> {
+    const existingSave = await getSystemSave();
+
+    if (existingSave?.id) {
+        await db.saves.update(existingSave.id, {
+            gameData,
+            timestamp: new Date(),
+            version: options.gameVersion,
+        });
+        return existingSave.id;
+    } else {
+        const id = await db.saves.add({
+            name: SYSTEM_SAVE_NAME,
+            gameData,
+            timestamp: new Date(),
+            version: options.gameVersion,
+            isSystemSave: true,
+        });
+        if (id === undefined) {
+            throw new Error("Failed to create system save");
+        }
+        return id;
+    }
 }

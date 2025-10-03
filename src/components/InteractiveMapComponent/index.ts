@@ -1,1 +1,1 @@
-export * from './InteractiveMapComponent';
+export * from "./InteractiveMapComponent";

@@ -1,7 +1,10 @@
 import { evalIfFunction } from "@app/utils";
 import { ImageHotspot } from "@components/InteractiveMapComponent/ImageHotspot";
 import { LabelHotspot } from "@components/InteractiveMapComponent/LabelHotspot";
-import { SideImageHotspot, SideLabelHotspot } from "@engine/passages/interactiveMap";
+import {
+    SideImageHotspot,
+    SideLabelHotspot,
+} from "@engine/passages/interactiveMap";
 import { Tooltip } from "@heroui/react";
 
 type Props = {

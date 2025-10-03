@@ -1,4 +1,9 @@
-import { ButtonColor, ButtonVariant } from "@engine/types";
+import {
+    ButtonColor,
+    ButtonVariant,
+    EmptyObject,
+    InitVarsType,
+} from "@engine/types";
 import { ReactNode } from "react";
 
 export interface BaseComponent {
@@ -111,7 +116,7 @@ export type ConversationAppearance = "atOnce" | "byClick"; // Define how the con
 export interface ConversationComponent extends BaseComponent {
     type: "conversation";
     content: Array<ConversationBubble>;
-    appearance?: ConversationAppearance, // default is "atOnce"
+    appearance?: ConversationAppearance; // default is "atOnce"
     props?: {
         variant?: ConversationVariant; // Type of conversation display
         className?: string; // CSS class for styling the conversation
@@ -126,7 +131,10 @@ export type Component =
     | ActionsComponent
     | ConversationComponent
     | AnotherStoryComponent;
-export type ComponentCallback = () => Component | undefined;
+
+export type StoryContent = <T extends InitVarsType = EmptyObject>(
+    props: T
+) => Array<Component>;
 
 export type StoryOptions = {
     background?: {

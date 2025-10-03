@@ -1,6 +1,13 @@
 import { GameSave } from "@app/db";
 import { getDateString } from "@components/SaveLoadModal/helpers";
-import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip } from "@heroui/react";
+import {
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Tooltip,
+} from "@heroui/react";
 import { CiSaveDown2 } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 
@@ -22,7 +29,7 @@ export const SaveSlot = ({ index, slot, isOnlyLoad }: SaveSlotProps) => {
             {slot && (
                 <Tooltip content="Delete Save Slot">
                     <Button
-                        variant='light'
+                        variant="light"
                         isIconOnly
                         className="absolute z-20 top-1 right-1 rounded-full"
                         onPress={deleteGameCallback}
@@ -32,7 +39,7 @@ export const SaveSlot = ({ index, slot, isOnlyLoad }: SaveSlotProps) => {
                 </Tooltip>
             )}
             <Card className="h-48 w-46 overflow-hidden">
-                <CardHeader/>
+                <CardHeader />
                 <CardBody className="overflow-hidden">
                     {slot ? (
                         <div className="flex flex-col">
@@ -47,9 +54,7 @@ export const SaveSlot = ({ index, slot, isOnlyLoad }: SaveSlotProps) => {
                             </div>
                         </div>
                     ) : (
-                        <div
-                            className="text-center text-secondary-100 flex flex-col items-center justify-center h-full"
-                        >
+                        <div className="text-center text-secondary-100 flex flex-col items-center justify-center h-full">
                             <CiSaveDown2 className="w-20 h-20" />
                             <span className="text-sm">Empty slot</span>
                         </div>
@@ -57,10 +62,14 @@ export const SaveSlot = ({ index, slot, isOnlyLoad }: SaveSlotProps) => {
                 </CardBody>
                 <CardFooter className="flex gap-1 justify-center">
                     {!isOnlyLoad && (
-                        <Button className='w-full' onPress={saveGameCallback}>Save</Button>
+                        <Button className="w-full" onPress={saveGameCallback}>
+                            Save
+                        </Button>
                     )}
                     {slot && (
-                        <Button className='w-full' onPress={loadGameCallback}>Load</Button>
+                        <Button className="w-full" onPress={loadGameCallback}>
+                            Load
+                        </Button>
                     )}
                 </CardFooter>
             </Card>

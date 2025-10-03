@@ -10,7 +10,7 @@ export class Storage {
      *
      * @packageDocumentation https://www.npmjs.com/package/jsonpath
      * @param {JsonPath} jsonPath - The JSONPath query that specifies the data to retrieve from the storage.
-     * @return {Array<T>} An array of values that match the provided JSONPath query.
+     * @return {Array<any>} An array of values that match the provided JSONPath query.
      */
     static getValue<T>(jsonPath: JsonPath): Array<T> {
         return jp.query(storage, jsonPath) as Array<T>;
@@ -51,7 +51,7 @@ export class Storage {
      */
     static getState(): GameSaveState {
         return storage;
-    };
+    }
 
     /**
      * Sets the entire state of the storage to a new value.
@@ -59,8 +59,8 @@ export class Storage {
      * @param {GameSaveState} state - The new state to set for the storage.
      */
     static setState(state: GameSaveState): void {
-        if (typeof state !== 'object' || state === null) {
-            throw new Error('Invalid state provided. Expected an object.');
+        if (typeof state !== "object" || state === null) {
+            throw new Error("Invalid state provided. Expected an object.");
         }
         // Clear the current storage
         for (const key in storage) {

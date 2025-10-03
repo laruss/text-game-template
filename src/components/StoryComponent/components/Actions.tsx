@@ -7,7 +7,7 @@ export const Actions = ({ component }: { component: ActionsComponent }) => (
         className={twMerge(
             "flex flex-wrap gap-2 justify-center items-center",
             component.props?.direction === "vertical" ? "flex-col" : "flex-row",
-            component.props?.className,
+            component.props?.className
         )}
     >
         {component.content.map((action, index) => (

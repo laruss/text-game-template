@@ -9,34 +9,37 @@ import { twMerge } from "tailwind-merge";
 
 const bubbleStyles = {
     chat: (side: ConversationBubbleSide) => ({
-        base: `flex items-start gap-2 mb-3 ${side === 'left' ? 'justify-start' : 'justify-end'}`,
+        base: `flex items-start gap-2 mb-3 ${side === "left" ? "justify-start" : "justify-end"}`,
         content: `max-w-[80%] px-4 py-2 rounded-2xl ${
-            side === 'left'
-                ? 'bg-default-100 text-default-900 rounded-tl-sm'
-                : 'bg-secondary-600 text-secondary-50 rounded-tr-sm'
+            side === "left"
+                ? "bg-default-100 text-default-900 rounded-tl-sm"
+                : "bg-secondary-600 text-secondary-50 rounded-tr-sm"
         }`,
-        avatar:
-            `w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${side === 'left' ? 'order-first' : 'order-last'}`,
+        avatar: `w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${side === "left" ? "order-first" : "order-last"}`,
     }),
     messenger: (side: ConversationBubbleSide) => ({
-        base: `flex items-end gap-2 my-4 ${side === 'left' ? 'justify-start' : 'justify-end'}`,
+        base: `flex items-end gap-2 my-4 ${side === "left" ? "justify-start" : "justify-end"}`,
         content: `max-w-[70%] px-4 py-3 shadow-sm ${
-            side === 'left'
-                ? 'bg-white text-gray-800 rounded-t-2xl rounded-br-2xl rounded-bl-lg border border-gray-200'
-                : 'bg-blue-500 text-white rounded-t-2xl rounded-bl-2xl rounded-br-lg'
+            side === "left"
+                ? "bg-white text-gray-800 rounded-t-2xl rounded-br-2xl rounded-bl-lg border border-gray-200"
+                : "bg-blue-500 text-white rounded-t-2xl rounded-bl-2xl rounded-br-lg"
         }`,
-        avatar: `w-10 h-10 rounded-full overflow-hidden mb-1 ${side === 'left' ? 'order-first' : 'order-last'}`,
+        avatar: `w-10 h-10 rounded-full overflow-hidden mb-1 ${side === "left" ? "order-first" : "order-last"}`,
     }),
 } as const;
 
-type ConversationLineProps = {
+type ConversationLineProps = Readonly<{
     line: ConversationBubble;
     variant?: ConversationVariant;
-    onClick?: () => void; // Optional click handler for interaction
-};
+    onClick?: () => void;
+}>;
 
-const ConversationLine = ({ line, onClick, variant = "chat" }: ConversationLineProps) => {
-    const classNames = bubbleStyles[variant](line.side || 'left');
+const ConversationLine = ({
+    line,
+    onClick,
+    variant = "chat",
+}: ConversationLineProps) => {
+    const classNames = bubbleStyles[variant](line.side || "left");
 
     return (
         <div
@@ -44,7 +47,12 @@ const ConversationLine = ({ line, onClick, variant = "chat" }: ConversationLineP
             style={{ backgroundColor: line.color }}
             onClick={onClick}
         >
-            <div className={twMerge(classNames.avatar, line.props?.classNames?.avatar)}>
+            <div
+                className={twMerge(
+                    classNames.avatar,
+                    line.props?.classNames?.avatar
+                )}
+            >
                 {line.who?.avatar ? (
                     <img
                         src={line.who.avatar}
@@ -57,33 +65,41 @@ const ConversationLine = ({ line, onClick, variant = "chat" }: ConversationLineP
                     </div>
                 )}
             </div>
-            <div className={twMerge(classNames.content, line.props?.classNames?.content)}>
+            <div
+                className={twMerge(
+                    classNames.content,
+                    line.props?.classNames?.content
+                )}
+            >
                 {line.content}
             </div>
         </div>
     );
 };
 
-export const Conversation = (
-    { component }: { component: ConversationComponent }
-) => {
+type ConversationProps = Readonly<{
+    component: ConversationComponent;
+}>;
+
+export const Conversation = ({ component }: ConversationProps) => {
     const [lines, setLines] = useState<Array<ConversationBubble>>([]);
+    const { appearance, content, props } = component;
 
     useEffect(() => {
-        if (component.appearance === "byClick") {
+        if (appearance === "byClick") {
             // If the conversation is set to appear by click, we can initialize it with an empty array
             setLines([]);
         } else {
             // If it appears at once, we can set all lines immediately
-            setLines(component.content);
+            setLines(content);
         }
-    }, [component.appearance, component.content]);
+    }, [appearance, content]);
 
     const onClick = () => {
-        if (component.appearance === "byClick") {
+        if (appearance === "byClick") {
             // If the conversation is set to appear by click, append the next line
             setLines((prevLines) => {
-                const nextLine = component.content[prevLines.length];
+                const nextLine = content[prevLines.length];
                 if (nextLine) {
                     return [...prevLines, nextLine];
                 }
@@ -94,7 +110,7 @@ export const Conversation = (
     };
 
     return (
-        <div className={component.props?.className}>
+        <div className={props?.className}>
             {lines.map((line, index) => (
                 <ConversationLine key={index} onClick={onClick} line={line} />
             ))}

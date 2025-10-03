@@ -1,5 +1,6 @@
 import { evalIfFunction } from "@app/utils";
 import { ImagePositionInfo } from "@components/InteractiveMapComponent/types";
+import { callIfFunction } from "@engine/helpers";
 import { MapMenu } from "@engine/passages/interactiveMap";
 import { Button, Tooltip } from "@heroui/react";
 import { useEffect, useMemo, useRef } from "react";
@@ -15,7 +16,7 @@ export const HotspotMenu = ({ menu, imagePositionInfo }: Props) => {
     const items = useMemo(
         () =>
             menu.items
-                .map((itemCallback) => itemCallback())
+                .map((item) => callIfFunction(item))
                 .filter((item) => item !== undefined),
         [menu.items]
     );
@@ -29,9 +30,11 @@ export const HotspotMenu = ({ menu, imagePositionInfo }: Props) => {
 
             // Calculate position based on percentage of the scaled image
             const xPos =
-                offsetLeft + ((typeof x === "number" ? x : x()) / 100) * scaledWidth;
+                offsetLeft +
+                ((typeof x === "number" ? x : x()) / 100) * scaledWidth;
             const yPos =
-                offsetTop + ((typeof y === "number" ? y : y()) / 100) * scaledHeight;
+                offsetTop +
+                ((typeof y === "number" ? y : y()) / 100) * scaledHeight;
 
             menuRef.current.style.left = `${xPos}px`;
             menuRef.current.style.top = `${yPos}px`;
@@ -48,7 +51,7 @@ export const HotspotMenu = ({ menu, imagePositionInfo }: Props) => {
             ref={menuRef}
             className={twMerge(
                 "absolute z-10 flex gap-2 p-2 bg-primary-50/50 rounded-lg shadow-md this-is-test",
-                menu.direction === "horizontal" ? "flex-row" : "flex-col",
+                menu.direction === "horizontal" ? "flex-row" : "flex-col"
             )}
         >
             {items.map((item, index) => {

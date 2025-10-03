@@ -1,3 +1,3 @@
-export * from './fabrics';
-export * from './story';
-export * from './types';
+export * from "./fabric";
+export * from "./story";
+export * from "./types";

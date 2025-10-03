@@ -1,6 +1,11 @@
 import { BaseGameObject } from "@engine/baseGameObject";
 
-class Environment extends BaseGameObject<{ dateTimestamp: number; temperature: number }> {
+type EnvironmentVariables = {
+    dateTimestamp: number;
+    temperature: number;
+};
+
+class Environment extends BaseGameObject<EnvironmentVariables> {
     get date(): Date {
         return new Date(this.variables.dateTimestamp);
     }
@@ -17,8 +22,18 @@ class Environment extends BaseGameObject<{ dateTimestamp: number; temperature: n
         this.variables.temperature = newTemp;
     }
 
-    spendTime({ days = 0, hours = 0, minutes = 0 }: { days?: number; hours?: number; minutes?: number }) {
-        console.log(`Spending time: ${days} days, ${hours} hours, ${minutes} minutes`);
+    spendTime({
+        days = 0,
+        hours = 0,
+        minutes = 0,
+    }: {
+        days?: number;
+        hours?: number;
+        minutes?: number;
+    }) {
+        console.log(
+            `Spending time: ${days} days, ${hours} hours, ${minutes} minutes`
+        );
         // Now we can mutate the timestamp directly - valtio will track this change
         const currentDate = new Date(this.variables.dateTimestamp);
         currentDate.setDate(currentDate.getDate() + days);
@@ -39,6 +54,6 @@ export const environment = new Environment({
     id: "environment",
     variables: {
         dateTimestamp: new Date().getTime(),
-        temperature: 22, // Start with 22°C (room temperature)
+        temperature: 22,
     },
 });
