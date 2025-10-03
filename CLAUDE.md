@@ -132,3 +132,4 @@ function HealthBar() {
 - Always use `useGameEntity()` in React components to enable reactivity
 - Mutate `variables` properties directly - Valtio handles reactivity
 - Never use `any` or `unknown` types
+- For testing, use bun:test module, for component testing use react-testing-library

@@ -144,6 +144,15 @@ export class Game {
         return (objectRegistry.get(object.id) as T) || object;
     }
 
+    /**
+     * Retrieves all proxied objects from the object registry.
+     *
+     * @return {Array<BaseGameObject>} An array of BaseGameObject instances stored in the object registry.
+     */
+    static _getAllProxiedObjects(): Array<BaseGameObject> {
+        return Array.from(objectRegistry.values());
+    }
+
     static get selfState() {
         return Game.state;
     }

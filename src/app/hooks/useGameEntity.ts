@@ -2,6 +2,40 @@ import { BaseGameObject } from "@engine/baseGameObject";
 import { Game } from "@engine/game";
 import { useProxy } from "valtio/utils";
 
+const getErrorMessage = (id: string) =>
+    [
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "⚠️  Entity Registration Error",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+        `Entity "${id}" is not registered with the game engine.`,
+        "",
+        "Why this happened:",
+        "  React components need entities to be registered as Valtio proxies",
+        "  to detect state changes and trigger re-renders automatically.",
+        "",
+        "How to fix:",
+        "  Entities should auto-register in their constructor via:",
+        "    Game.registerEntity(this)",
+        "",
+        `  If "${id}" is a custom entity, ensure its constructor`,
+        "  calls the parent BaseGameObject constructor which handles registration:",
+        "",
+        "  Example:",
+        "    constructor(props) {",
+        "      super(props); // This registers the entity",
+        "    }",
+        "",
+        "Troubleshooting:",
+        `  1. Check if "${id}" extends BaseGameObject`,
+        "  2. Verify the constructor calls super() with an id",
+        "  3. Make sure the entity is imported before using useGameEntity",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+    ].join("\n");
+
 /**
  * Monitors changes to a given game entity by wrapping it in a Valtio proxy.
  * This hook enables React components to automatically re-render when the entity's state changes.
@@ -28,39 +62,7 @@ export function useGameEntity<T extends BaseGameObject>(gameObject: T): T {
     } catch (error) {
         // if error is a TypeError, it means the object is not registered
         if (error instanceof TypeError) {
-            const errorMessage = [
-                "",
-                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-                "⚠️  Entity Registration Error",
-                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-                "",
-                `Entity "${gameObject.id}" is not registered with the game engine.`,
-                "",
-                "Why this happened:",
-                "  React components need entities to be registered as Valtio proxies",
-                "  to detect state changes and trigger re-renders automatically.",
-                "",
-                "How to fix:",
-                "  Entities should auto-register in their constructor via:",
-                "    Game.registerEntity(this)",
-                "",
-                `  If "${gameObject.id}" is a custom entity, ensure its constructor`,
-                "  calls the parent BaseGameObject constructor which handles registration:",
-                "",
-                "  Example:",
-                "    constructor(props) {",
-                "      super(props); // This registers the entity",
-                "    }",
-                "",
-                "Troubleshooting:",
-                `  1. Check if "${gameObject.id}" extends BaseGameObject`,
-                "  2. Verify the constructor calls super() with an id",
-                "  3. Make sure the entity is imported before using useGameEntity",
-                "",
-                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-                "",
-            ].join("\n");
-
+            const errorMessage = getErrorMessage(gameObject.id);
             console.error(errorMessage);
             throw new Error(errorMessage);
         } else {

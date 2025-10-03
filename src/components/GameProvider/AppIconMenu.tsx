@@ -1,14 +1,10 @@
-import { options } from "@engine/options";
-import { useCallback, useState } from "react";
+import { useState } from "react";
+
+import { useOptions } from "./OptionsContext";
 
 export const AppIconMenu = () => {
     const [isHovered, setIsHovered] = useState(false);
-    const [isDevMode, setIsDevMode] = useState(options.current.isDevMode);
-
-    const toggleDevMode = useCallback(() => {
-        options.set({ isDevMode: !isDevMode });
-        setIsDevMode(!isDevMode);
-    }, [isDevMode]);
+    const { isDevMode, setIsDevMode } = useOptions();
 
     return (
         <div className="fixed bottom-3 left-2 z-10000000">
@@ -30,7 +26,7 @@ export const AppIconMenu = () => {
                             type="checkbox"
                             className="cursor-pointer"
                             checked={isDevMode}
-                            onChange={toggleDevMode}
+                            onChange={() => setIsDevMode(!isDevMode)}
                         />
                         <span>Is dev mode</span>
                     </label>

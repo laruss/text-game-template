@@ -36,10 +36,8 @@ export const HotspotMap = ({ imageUrl, children }: HotspotMapProps) => {
         error: SyntheticEvent<HTMLImageElement, Event>
     ) => {
         console.error("Failed to load image:", error);
-        alert(
-            "Failed to load the hotspot map image. Check console for details."
-        );
         setIsLoading(false);
+        throw error;
     };
 
     return (
