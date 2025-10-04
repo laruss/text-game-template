@@ -1,7 +1,7 @@
 import { db, type GameSave, loadGame } from "@app/db";
 import { Game } from "@engine/game";
 import { addToast } from "@heroui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback } from "react";
 
 const getLastSave = async (): Promise<GameSave | null> => {
@@ -13,18 +13,13 @@ const getLastSave = async (): Promise<GameSave | null> => {
 };
 
 export const useGetLastLoadGame = () => {
-    const query = useQuery<GameSave | null>({
-        queryKey: ["lastSave"],
-        queryFn: getLastSave,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
-    });
+    const lastSave = useLiveQuery(getLastSave, [], null);
 
     const loadLastGame = useCallback(async () => {
-        if (!query.data?.id) return;
+        if (!lastSave?.id) return;
 
         try {
-            const data = await loadGame(query.data.id);
+            const data = await loadGame(lastSave.id);
             if (!data) {
                 addToast({
                     title: "Game not found",
@@ -40,12 +35,12 @@ export const useGetLastLoadGame = () => {
             });
             console.error("Failed to load game:", e);
         }
-    }, [query.data?.id]);
+    }, [lastSave?.id]);
 
     return {
-        hasLastSave: !!query.data,
+        hasLastSave: !!lastSave,
         loadLastGame,
-        isLoading: query.isLoading,
-        lastSave: query.data,
+        isLoading: lastSave === undefined,
+        lastSave: lastSave ?? null,
     };
 };

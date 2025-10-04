@@ -1,6 +1,6 @@
 {
     "name": "react-text-game",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "A modern, TypeScript-based framework for creating interactive text-based adventure games with a rich web interface. Build immersive narratives through a passage-based system that supports story content, interactive maps, and custom React widgets.",
     "private": true,
     "type": "module",
@@ -43,7 +43,6 @@
     "dependencies": {
         "@heroui/react": "^2.8.4",
         "@tailwindcss/vite": "^4.1.14",
-        "@tanstack/react-query": "^5.80.6",
         "crypto-js": "^4.2.0",
         "dexie": "^4.2.0",
         "dexie-react-hooks": "^4.2.0",

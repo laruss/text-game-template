@@ -1,11 +1,8 @@
 import { deleteSave } from "@app/db";
 import { useConfirmation } from "@components/ConfiramtionDialog";
 import { addToast } from "@heroui/react";
-import { useQueryClient } from "@tanstack/react-query";
 
 export const useDeleteSlot = (id?: number) => {
-    const queryClient = useQueryClient();
-
     return useConfirmation({
         title: "Delete Save",
         message:
@@ -17,7 +14,6 @@ export const useDeleteSlot = (id?: number) => {
 
             try {
                 await deleteSave(id);
-                await queryClient.invalidateQueries({ queryKey: ["saves"] });
             } catch (e) {
                 addToast({
                     title: "An error occurred",

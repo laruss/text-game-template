@@ -1,21 +1,16 @@
 import { GameSave, getAllSaves } from "@app/db";
-import { useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "dexie-react-hooks";
 
 export const useSaveSlots = () => {
-    const query = useQuery<GameSave[]>({
-        queryKey: ["saves"],
-        queryFn: getAllSaves,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-    });
+    const data = useLiveQuery(() => getAllSaves(), [], []) as
+        | GameSave[]
+        | undefined;
 
     return {
-        ...query,
-        isEmpty: query.data?.length === 0,
-        isLoading: query.isLoading,
-        isError: query.isError,
-        error: query.error,
-        data: query.data || [],
+        isEmpty: data?.length === 0,
+        isLoading: data === undefined,
+        isError: false,
+        error: null,
+        data: data || [],
     };
 };

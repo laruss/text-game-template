@@ -2,12 +2,9 @@ import { deleteAllGameSaves, GameSave, saveGame } from "@app/db";
 import { SAFE_FILE_EXTENSION } from "@components/SaveLoadModal/constants";
 import { decodeSf } from "@components/SaveLoadModal/helpers";
 import { addToast } from "@heroui/react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 export const useImportSaves = () => {
-    const queryClient = useQueryClient();
-
     return useCallback(async () => {
         try {
             // Create a file input element
@@ -70,9 +67,6 @@ export const useImportSaves = () => {
                 );
             }
 
-            // Invalidate saves query to refresh the UI
-            queryClient.invalidateQueries({ queryKey: ["saves"] });
-
             // Notify user of successful import
             addToast({
                 title: "Saves imported",
@@ -89,5 +83,5 @@ export const useImportSaves = () => {
                     "Failed to import saves. Please check the console for more details.",
             });
         }
-    }, [queryClient]);
+    }, []);
 };
