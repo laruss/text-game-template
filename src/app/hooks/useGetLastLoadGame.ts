@@ -5,8 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 const getLastSave = async (): Promise<GameSave | null> => {
-    const save = await db.saves.orderBy("timestamp").reverse().first();
-    return save ?? null;
+    const save = await db.saves
+        .filter((save) => !save.isSystemSave)
+        .reverse()
+        .sortBy("timestamp");
+    return save[0] ?? null;
 };
 
 export const useGetLastLoadGame = () => {
@@ -14,7 +17,6 @@ export const useGetLastLoadGame = () => {
         queryKey: ["lastSave"],
         queryFn: getLastSave,
         refetchOnWindowFocus: false,
-        refetchOnMount: false,
         refetchOnReconnect: false,
     });
 

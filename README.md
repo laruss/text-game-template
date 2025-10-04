@@ -1,6 +1,6 @@
 # Text Adventure Game Engine
 
-### Version 0.2.0
+### Version 0.2.1
 
 A modern, TypeScript-based framework for creating interactive text-based adventure games with a rich web interface. Build immersive narratives through a passage-based system that supports story content, interactive maps with clickable hotspots, and custom React widgets.
 
@@ -155,26 +155,26 @@ The central singleton managing the entire game system:
 
 ```typescript
 // Navigation
-Game.jumpTo(passageId)              // Navigate to a passage
-Game.setCurrent(passage)             // Set current without effects
-Game.currentPassage                  // Get current passage
-Game.getPassageById(id)              // Get specific passage
-Game.getAllPassages()                // Get all passages
+Game.jumpTo(passageId); // Navigate to a passage
+Game.setCurrent(passage); // Set current without effects
+Game.currentPassage; // Get current passage
+Game.getPassageById(id); // Get specific passage
+Game.getAllPassages(); // Get all passages
 
 // State Management
-Game.getState()                      // Get complete game state
-Game.setState(state)                 // Restore game state
-Game.init()                          // Initialize (create system save)
+Game.getState(); // Get complete game state
+Game.setState(state); // Restore game state
+Game.init(); // Initialize (create system save)
 
 // Auto-save
-Game.enableAutoSave()                // Enable session storage auto-save
-Game.disableAutoSave()               // Disable auto-save
-Game.loadFromSessionStorage()        // Load auto-saved state
-Game.clearAutoSave()                 // Clear auto-save
+Game.enableAutoSave(); // Enable session storage auto-save
+Game.disableAutoSave(); // Disable auto-save
+Game.loadFromSessionStorage(); // Load auto-saved state
+Game.clearAutoSave(); // Clear auto-save
 
 // Registration (automatic via constructors)
-Game.registerEntity(entity)          // Register game entity
-Game.registerPassage(passage)        // Register passage
+Game.registerEntity(entity); // Register game entity
+Game.registerPassage(passage); // Register passage
 ```
 
 #### Passages
@@ -255,31 +255,28 @@ import { newStory } from "@engine/passages/story";
 import { player } from "@game/entities/player";
 import { Game } from "@engine/game";
 
-export const chapter1 = newStory(
-    "chapter1",
-    () => [
-        newHeader("Chapter 1: The Beginning"),
-        newText("You wake up in a dark room..."),
-        newImage("/images/dark-room.jpg"),
-        newActions([
-            {
-                text: "Look around",
-                onClick: () => {
-                    Game.jumpTo("chapter1-explore");
-                },
+export const chapter1 = newStory("chapter1", () => [
+    newHeader("Chapter 1: The Beginning"),
+    newText("You wake up in a dark room..."),
+    newImage("/images/dark-room.jpg"),
+    newActions([
+        {
+            text: "Look around",
+            onClick: () => {
+                Game.jumpTo("chapter1-explore");
             },
-            {
-                text: "Call for help",
-                onClick: () => {
-                    player.takeDamage(10);
-                    Game.jumpTo("chapter1-help");
-                },
-                // Conditional display
-                condition: () => player.health > 50,
+        },
+        {
+            text: "Call for help",
+            onClick: () => {
+                player.takeDamage(10);
+                Game.jumpTo("chapter1-help");
             },
-        ]),
-    ]
-);
+            // Conditional display
+            condition: () => player.health > 50,
+        },
+    ]),
+]);
 ```
 
 ### Creating an Interactive Map
@@ -287,7 +284,10 @@ export const chapter1 = newStory(
 ```typescript
 // src/game/maps/town.ts
 import { newInteractiveMap } from "@engine/passages/interactiveMap";
-import { newMapLabelHotspot, newMapImageHotspot } from "@engine/passages/interactiveMap/fabric";
+import {
+    newMapLabelHotspot,
+    newMapImageHotspot,
+} from "@engine/passages/interactiveMap/fabric";
 import { Game } from "@engine/game";
 import { player } from "@game/entities/player";
 
@@ -331,10 +331,12 @@ const MainMenuContent = () => {
     return (
         <div className="flex flex-col items-center justify-center h-full">
             <h1>My Adventure Game</h1>
-            <Button onClick={() => Game.jumpTo("intro")}>
-                New Game
-            </Button>
-            <Button onClick={() => {/* Open load modal */}}>
+            <Button onClick={() => Game.jumpTo("intro")}>New Game</Button>
+            <Button
+                onClick={() => {
+                    /* Open load modal */
+                }}
+            >
                 Load Game
             </Button>
         </div>
@@ -394,7 +396,7 @@ async function loadSavedGame(saveId: number) {
 // List all saves
 async function listSaves() {
     const saves = await getAllSaves();
-    saves.forEach(save => {
+    saves.forEach((save) => {
         console.log(`${save.name} - ${save.timestamp}`);
     });
 }
@@ -405,6 +407,7 @@ async function listSaves() {
 ### Entity Design
 
 ✅ **DO:**
+
 - Keep entity logic in the entity class
 - Use getters/setters for computed properties
 - Mutate `variables` directly (Valtio tracks changes)
@@ -412,6 +415,7 @@ async function listSaves() {
 - Export a single instance if it's a singleton (like `player`)
 
 ❌ **DON'T:**
+
 - Use `any` or `unknown` types
 - Mutate entities outside their methods (prefer methods for complex logic)
 - Create entities inside React components
@@ -419,12 +423,14 @@ async function listSaves() {
 ### Passage Organization
 
 ✅ **DO:**
+
 - Group related passages in the same file
 - Use factory functions for dynamic content
 - Leverage conditional rendering based on game state
 - Keep passage IDs descriptive and unique
 
 ❌ **DON'T:**
+
 - Hard-code passage IDs as strings everywhere (use constants)
 - Create circular dependencies between passages
 - Put game logic in passage definitions (use entities)
@@ -432,12 +438,14 @@ async function listSaves() {
 ### State Management
 
 ✅ **DO:**
+
 - Always use `useGameEntity()` in React components
 - Enable auto-save in production
 - Use the system save for restart functionality
 - Store complex state in entities, not passages
 
 ❌ **DON'T:**
+
 - Access entity properties directly in components without `useGameEntity()`
 - Modify system storage paths directly
 - Store UI state in game entities
@@ -445,12 +453,14 @@ async function listSaves() {
 ### Component Development
 
 ✅ **DO:**
+
 - Use path aliases (`@engine/`, `@game/`, etc.)
 - Keep components pure and reusable
 - Use HeroUI components for consistency
 - Implement loading and error states
 
 ❌ **DON'T:**
+
 - Import from relative paths when aliases exist
 - Mix game logic with UI logic
 - Create tightly coupled components
@@ -458,12 +468,14 @@ async function listSaves() {
 ### Performance
 
 ✅ **DO:**
+
 - Use dynamic imports for large passage collections
 - Implement code splitting for better load times
 - Use React.memo for expensive render components
 - Debounce frequent state updates
 
 ❌ **DON'T:**
+
 - Create new entity instances on every render
 - Subscribe to entities you don't use
 - Load all game assets upfront
@@ -473,6 +485,7 @@ async function listSaves() {
 ### Engine (`src/engine/`)
 
 The engine should be **game-agnostic** and reusable. It contains:
+
 - Core game mechanics
 - Passage type definitions
 - State management utilities
@@ -483,6 +496,7 @@ The engine should be **game-agnostic** and reusable. It contains:
 ### Game (`src/game/`)
 
 Game-specific content including:
+
 - Story definitions
 - Map layouts
 - Game entities
@@ -493,6 +507,7 @@ Game-specific content including:
 ### App (`src/app/`)
 
 Application utilities that bridge the engine and UI:
+
 - Custom hooks
 - Database operations
 - Utility functions
@@ -504,7 +519,7 @@ Edit `src/game/options.ts` to configure your game:
 ```typescript
 export const options = {
     gameName: "Your Game Title",
-    gameId: "unique-game-id",        // Used for database naming
+    gameId: "unique-game-id", // Used for database naming
     description: "Game description",
     gameVersion: "1.0.0",
     author: "Your Name",
@@ -515,6 +530,9 @@ export const options = {
 
 ### High Priority
 
+- [x] **Fix loading / saving game db issues**;
+- [x] **Fix hook `Continue Game` to recheck game saves on rerender**;
+- [ ] **Increase save versioning**: Implement versioning for save files to handle future games versions;
 - [ ] **Separate HeroUI from core engine**: Move `@heroui/react` to a separate optional UI library to make the core engine UI-agnostic
 - [ ] **Extract core to standalone package**: Create a separate npm package for the game engine that can be reused across projects
 - [ ] **Write comprehensive tests**: Add test coverage for core functionality including:
@@ -550,6 +568,7 @@ export const options = {
 ## Contributing
 
 Contributions are welcome! Please ensure:
+
 - TypeScript strict mode compliance
 - ESLint and Prettier formatting
 - Test coverage for new features
